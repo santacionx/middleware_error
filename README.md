@@ -5,32 +5,6 @@ This guide outlines the middleware functions and error handling techniques used 
 ## Middleware Functions
 
 ### Method Override
-- **Purpose:** Allows HTTP methods like PUT, DELETE, and UPDATE in forms where the client doesn't support it.
-- **Usage:** `method-override`
-
-### Body Parser
-- **Purpose:** Parses incoming request bodies to make it accessible under `req.body`.
-- **Usage:** `body-parser`
-
-### Express Static
-- **Purpose:** Serves static files like HTML, CSS, and JavaScript.
-- **Usage:** `express.static`
-
-### Express URL Encoded
-- **Purpose:** Parses incoming requests with URL-encoded payloads.
-- **Usage:** `express.urlencoded({ extended: true })`
-
-### Async Wrapper
-- **Purpose:** Handles asynchronous functions by wrapping them to catch errors and pass them to the error handler.
-- **Usage:** 
-  ```javascript
-  function asyncWrap(fn) {
-    return function (req, res, next) {
-      fn(req, res, next).catch(next);
-    };
-  }```
-
-### Method Override
 
 - **Purpose:** Allows support for HTTP methods like PUT, DELETE, and UPDATE in forms where the client doesn't support it.
 - **Usage:** `method-override`
