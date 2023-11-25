@@ -1,0 +1,81 @@
+middleware are in express : function 
+after server: recieves req, 
+brfore client: response send 
+can access: req,res
+possible: chaining  
+can : send res, 
+can:exec any code ,
+npcan: make change on req,res
+can: end req,res
+
+method-ovveride (put,del,update http req)
+bodyParser
+express.static
+express.urlencoded
+app.use(express.urlencoded({extended:true}))
+app.use(express.static(path.join(__dirname,"/public")))
+
+example 
+app.use((req,res,next)=>{
+    let {q}=req.query
+    console.log("hi im middleware")
+    return next();
+})
+// logger -morgan
+app.use((req,res,next)=>{
+    req.time=Date.now();
+    console.log(req.method,req.hostname ,req.path, req.time)
+    next()
+})
+
+app.use((req,res)=>{
+  res.status(404).send("page not found")
+})
+
+app.get("/",(req,res)=>{
+    res.send("hello");
+})
+app.get("/random",(req,res)=>{
+    res.send("random");
+})
+
+next() : non -err handling middleware
+next(err) :error handling middleware
+
+
+// app.use("/api",(req,res,next)=>{
+//     let {token}=req.query;
+//     if(token == "giveacess"){
+//        return next();
+//     }else{
+//         res.status(404).send("404 not found");
+//     }
+// })
+
+
+const ctoken =(req,res,next)=>{
+    let {token}=req.query;
+    if(token == "giveacess"){
+       return next();
+    }else{
+       throw new ExpressError(401,"access denied ");
+    
+    }
+}
+app.get("/api",ctoken,(req,res)=>{
+    res.send("data");
+})
+//   app.use((err, req, res, next) => {
+//     console.log("---error 2--")
+//     next(err)
+//   })
+app.get("/hello",(req,res)=>{
+    a=a
+})
+// next will search for nonerr handling middlewae
+app.use((err, req, res, next) => {
+    console.log("---error--")
+    let {status=500,message="some err "}=err;
+    res.status(status).send(message);
+  })
+
